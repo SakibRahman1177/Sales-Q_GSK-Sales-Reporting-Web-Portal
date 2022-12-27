@@ -37,7 +37,7 @@ Route::get('/logout',[LoginAuthController::class,'logout'])->name('logout');
 
 // Route::get('/Dump-data',[PostController::class, 'Store'])->middleware('ValidAdmin');
 Route::get('/',[ExcelController::class, 'index'])->middleware('ValidAdmin');
-Route::post('/Dumpdata/import',[ExcelController::class, 'importData'])->middleware('ValidAdmin');
+Route::post('/',[ExcelController::class, 'importData'])->middleware('ValidAdmin');
 Route::get('/Dumpdata/export',[ExcelController::class, 'exportData'])->middleware('ValidAdmin');
 
 Route::get('/ASEList',[ASEController::class, 'AseTable'])->middleware('ValidAdmin');
@@ -49,6 +49,12 @@ Route::post('/add-ase-list', [ASEController::class, 'storeASE'])->middleware('Va
 // Route::get('/',[ASEController::class, 'index'])->middleware('ValidAdmin');
 Route::post('/ASEList',[ASEController::class, 'importAseData'])->middleware('ValidAdmin');
 // Route::get('/ASEList',[ASEController::class, 'searchASE'])->middleware('ValidAdmin');
+
+Route::controller(ExcelController::class)->group(function(){
+    Route::get('analytics-result', 'analytics');
+    Route::get('data-export', 'export')->name('Dumpdata.export');
+    Route::post('data-import', 'import')->name('Dumpdata.import');
+});
 
 // Route::any( '/search', function() {
 //     $q = (Input::get ('q'));
@@ -64,6 +70,7 @@ Route::post('/ASEList',[ASEController::class, 'importAseData'])->middleware('Val
 //     else
 //         return view ( 'ASElist' )->withMessage('No Details found. Try to search again !');
 // } );
+
 
 
 Route::get('file-import-export', [ExcelController::class, 'fileImportExport'])->middleware('ValidAdmin');
@@ -85,6 +92,8 @@ Route::get('/show-ssd-post-data', [senURLController::class, 'displayData'])->mid
 Route::get('/area/{ASE_Area}', [ASEController::class, 'ManageChamber'])->middleware('ValidAdmin');
 
 Route::get('/chamber/{OutletCode}', [ASEController::class, 'OutletSaleData'])->middleware('ValidAdmin');
+Route::post('/SalebyMonth', [ASEController::class, 'salebyMonth'])->name('SalebyMonth')->middleware('ValidAdmin');
+Route::get('/SalesReport/export',[ASEController::class, 'exportMOSalesData'])->middleware('ValidAdmin');
 
 Route::get('/edit-ssd-post-data/{id}', [senURLController::class, 'editSenData'])->name('sensodyne.senEdit')->middleware('ValidAdmin');
 Route::post('/edit-ssd-post-data', [senURLController::class, 'updateSenData'])->name('sensodyne.senEdit')->middleware('ValidAdmin');
@@ -99,8 +108,8 @@ Route::get('/edit-pdx-post-data/{id}', [PdxURLController::class, 'editParData'])
 Route::post('/edit-pdx-post-data', [PdxURLController::class, 'updateParData'])->name('parodontax.parEdit')->middleware('ValidAdmin');
 
 Route::get('/destroy-pdx-post-data/{id}', [PdxURLController::class, 'deleteParData'])->name('deleteParData')->middleware('ValidAdmin');
-Route::get('/reg', [LoginAuthController::class, 'addAdmin'])->middleware('ValidAdmin');
-    Route::post('/reg', [LoginAuthController::class, 'addAdminSubmitted'])->middleware('ValidAdmin');
+Route::get('/reg', [LoginAuthController::class, 'addAdmin']);
+    Route::post('/reg', [LoginAuthController::class, 'addAdminSubmitted']);
 
 // Route::group(['middleware'=>'admins'],function(){
     

@@ -8,9 +8,9 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-// use Maatwebsite\Excel\Facades\Excel;
-// use App\Imports\UsersImport;
-// use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ExcelImport;
+use App\Exports\ExcelExport;
 
 class ExcelController extends Controller
 {
@@ -19,9 +19,11 @@ class ExcelController extends Controller
 
     function index()
     {
-        $data = DB::table('posts')->orderBy('OutletCode', 'ASC')->paginate(20);
+        $data = DB::table('posts')->paginate(20);
         return view('Analytics', compact('data'));
+        // return $data;
     }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
@@ -36,6 +38,8 @@ class ExcelController extends Controller
         $the_file = $request->file('uploaded_file');
         try{
             $spreadsheet = IOFactory::load($the_file->getRealPath());
+            $sheet = new Spreadsheet();
+            $sheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);
             $sheet        = $spreadsheet->getActiveSheet();
             $row_limit    = $sheet->getHighestDataRow();
             $column_limit = $sheet->getHighestDataColumn();
@@ -58,6 +62,7 @@ class ExcelController extends Controller
                     'Address' =>$sheet->getCell( 'K' . $row )->getValue(),
                     'ContactNumber' =>$sheet->getCell( 'L' . $row )->getValue(),
                     'Brand' =>$sheet->getCell( 'M' . $row )->getValue(),
+                    'Month' =>$sheet->getCell( 'N' . $row )->getValue(),
                     // 'Date' =>date("d-m-Y"),
                 ];
                 $startcount++;
@@ -66,8 +71,10 @@ class ExcelController extends Controller
         } catch (Exception $e) {
             $error_code = $e->errorInfo[1];
             return back()->withErrors('There was a problem uploading the data!');
+            // return $data;
         }
         return back()->withSuccess('Great! Data has been successfully uploaded.');
+        // return $data;
     }
     /**
      * @param $customer_data
@@ -81,7 +88,7 @@ class ExcelController extends Controller
             $spreadSheet->getActiveSheet()->fromArray($dump_data);
             $Excel_writer = new Xls($spreadSheet);
             header('Content-Type: application/vnd.ms-excel');
-            header('Content-Disposition: attachment;filename="Dumpdata.xls"');
+            header('Content-Disposition: attachment;filename="Historical Sales Dumpdata.xls"');
             header('Cache-Control: max-age=0');
             ob_end_clean();
             $Excel_writer->save('php://output');
@@ -96,17 +103,15 @@ class ExcelController extends Controller
      */
     function exportData(){
         $data = DB::table('posts')->orderBy('OutletCode', 'ASC')->get();
-        $data_array [] = array("Month","Area","Territory","DBCode","DBName", "OutletCode", "SKUCode","SKUName","Pcs","Value", "OutletName", "DHCPName", "Address", "ContactNumber", "OutletCreationDate", "Brand");
+        $data_array [] = array("Area","Territory","DBCode","DBName", "OutletCode", "SKUName","Pcs","Value", "OutletName", "DHCPName", "Address", "ContactNumber", "Brand", "Month");
         foreach($data as $data_item)
         {
             $data_array[] = array(
-                'Month' =>$data_item->Region,
                 'Area' => $data_item->Area,
                 'Territory' => $data_item->Territory,
                 'DBCode' => $data_item->DBCode,
                 'DBName' => $data_item->DBName,
                 'OutletCode' => $data_item->OutletCode,         
-                'SKUCode' => $data_item->SKUCode,
                 'SKUName' => $data_item->SKUName,
                 'Pcs' => $data_item->Pcs,
                 'Value' => $data_item->Value,
@@ -114,34 +119,34 @@ class ExcelController extends Controller
                 'DHCPName' => $data_item->DHCPName,
                 'Address' => $data_item->Address,
                 'ContactNumber' => $data_item->ContactNumber,
-                'OutletCreationDate' => $data_item->OutletCreationDate,
                 'Brand' => $data_item->Brand,
+                'Month' =>$data_item->Month,
             );
         }
         $this->ExportExcel($data_array);
     }
 
-    //using maatwebsite
-    public function fileImportExport(Request $request)
-    {
-        return view('Analytics');
-    }
+    // //using maatwebsite
+    // public function fileImportExport(Request $request)
+    // {
+    //     return view('Analytics');
+    // }
 
 
-    public function fileImport(Request $request) 
-    {
-        $request->validate([
-            'import_file' => 'required',
-        ]);
-        Excel::import(new UsersImport, 
-                      $request->file('file')->store('files'));
-        return redirect()->back();
-    }
+    // public function fileImport(Request $request) 
+    // {
+    //     $request->validate([
+    //         'import_file' => 'required',
+    //     ]);
+    //     Excel::import(new UsersImport, 
+    //                   $request->file('file')->store('files'));
+    //     return redirect()->back();
+    // }
 
 
-    public function fileExport() 
-    {
-        return Excel::download(new UsersExport, 'Dumpdata.xlsx');
-    }   
+    // public function fileExport() 
+    // {
+    //     return Excel::download(new UsersExport, 'Dumpdata.xlsx');
+    // }   
  }
 

@@ -4,7 +4,7 @@
 
 <head>
 
-   <title>ASE List</title>
+   <title>ChamberQ - ASE Area-Wise Sales Report</title>
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
@@ -14,7 +14,14 @@
 
    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />
 
-
+   <style>
+    td{
+        font-size: 13px;
+    }
+    th{
+        text-align: center;
+    }
+    </style>
 
 
 </head>
@@ -53,21 +60,21 @@
                        <table id="example" class="table table-striped table-bordered" style="width:100%">
 
                            <thead>
-                           <th>ASM Expert</th>
-                           <th>ASE_Name</th>
+                           <th>ASM_Expert</th>
+                           <th>..ASE_Name.. </th>
                            <th>ASE_Area</th>
                            <th>Territory</th>
-                           <th>Outlet Code</th>
+                           <th>Outlet_Code</th>
                            <th>Area</th>
-                           <th>DB Code</th>
-                           <th>DB Name</th>
-                           <th>Outlet Name</th>
-                           <th>SKU Name</th>
+                           <th>DB_Code</th>
+                           <th>......DB_Name......</th>
+                           <th>.....Outlet_Name.....</th>
+                           <th>.......SKU_Name.......</th>
                            <th>PCs</th>
 						   <th>Value</th>
-                           <th>DHCP Name</th>
-                           <th>Address</th>
-                           <th>Contact Number</th>
+                           <th>..DHCP_Name..</th>
+                           <th>....Address....</th>
+                           <th>Contact_Number</th>
                            <th>Brand</th>
                            <th>Month</th>
                            </thead>
@@ -95,7 +102,7 @@
 									   <td>{{ $row->Address }}</td>
                                        <td>{{ $row->ContactNumber }}</td>
                                        <td>{{ $row->Brand }}</td>
-                                       <td></td>
+                                       <td>{{ $row->Month }}</td>
                                    </tr>
                                @endforeach
                         

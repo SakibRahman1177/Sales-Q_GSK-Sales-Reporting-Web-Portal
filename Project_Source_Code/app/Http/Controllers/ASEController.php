@@ -115,10 +115,80 @@ class ASEController extends Controller
 
     public function OutletSaleData(Request $request)
     {
-        $data= DB::select('select * from a_s_e_s, posts where a_s_e_s.OutletCode = posts.OutletCode and posts.OutletCode = ? ',[$request->OutletCode]);
+        $request->session()->put('OutletCode',$request->OutletCode);
+        $data= DB::select('select * from a_s_e_s, posts where a_s_e_s.OutletCode = posts.OutletCode and 
+        posts.OutletCode = ? ',[$request->OutletCode]);
         return view('Chamber.OutletSale')->with('data', $data);
 
    }
+
+   public function salebyMonth(Request $request)
+    {
+        
+        if($request->Month == 'Select a Month'){
+            $data= DB::select('select * from a_s_e_s, posts where a_s_e_s.OutletCode = posts.OutletCode and 
+        posts.OutletCode = ? ',[$request->session()->get('OutletCode',$request->OutletCode)]);
+        return view('Chamber.OutletSale')->with('data', $data);
+        }
+        $data= DB::select('select * from a_s_e_s, posts where a_s_e_s.OutletCode = posts.OutletCode and 
+        posts.OutletCode = ? and posts.Month = ?',
+        [$request->session()->get('OutletCode',$request->OutletCode), $request->Month]);
+        return view('Chamber.OutletSale')->with('data', $data);
+        return $request;
+    }
+    
+
+
+    public function ExportOutletMonthlySale($dump_data){
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '4000M');
+        try {
+            $spreadSheet = new Spreadsheet();
+            $spreadSheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);
+            $spreadSheet->getActiveSheet()->fromArray($dump_data);
+            $Excel_writer = new Xls($spreadSheet);
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="Monthly Outlet Sales Dumpdata.xls"');
+            header('Cache-Control: max-age=0');
+            ob_end_clean();
+            $Excel_writer->save('php://output');
+            exit();
+        } catch (Exception $e) {
+            return;
+        }
+    }
+    /**
+     *This function loads the customer data from the database then converts it
+     * into an Array that will be exported to Excel
+     */
+    function exportMOSalesData(Request $request){
+        $data= DB::select('select * from a_s_e_s,posts')->get();
+        $data_array [] = array("ASM_Expert", "ASE_Name", "ASE_Area", "Territory", "OutletCode", "OutletName", "Area", "DBCode","DBName", "DHCPName", "ContactNumber", "SKUName", "Pcs","Value", "Brand", "Month");
+        foreach($data as $data_item)
+        {
+            $data_array[] = array(
+                'ASM_Expert' => $data_item->ASM_Expert,
+                'ASE_Name' => $data_item->ASE_Name,
+                'ASE_Area' => $data_item->ASE_Area,
+                'Territory' => $data_item->Territory,
+                'OutletCode' => $data_item->OutletCode, 
+                'OutletName' =>$data_item->OutletName,
+                'Area' => $data_item->Area,
+                'DBCode' => $data_item->DBCode,
+                'DBName' => $data_item->DBName,
+                'DHCPName' => $data_item->DHCPName, 
+                'ContactNumber' => $data_item->ContactNumber,       
+                'SKUName' => $data_item->SKUName,
+                'Pcs' => $data_item->Pcs,
+                'Value' => $data_item->Value,
+                'Brand' => $data_item->Brand,
+                'Month' =>$data_item->Month,
+            );
+        }
+        $this->ExportOutletMonthlySale($data_array);
+    }
+
+
 
     public function AseTable()
     {

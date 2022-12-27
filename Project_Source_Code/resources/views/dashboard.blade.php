@@ -14,7 +14,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/dash.css') }}">
-
+	<style>
+		h3{
+			font-size: 15px;
+		}
+		</style>
 </head>
 
 <body>
@@ -39,7 +43,7 @@
 				<div class="col-sm-6 col-lg-4 col-xl-3">
 					<div class="single-person">
 						<div class="person-image">
-							<img src="{{url('../images/sujit.jpg')}}" alt="National Sales and Expert Lead">
+							<img src="{{url('../images/sujit.jpg')}}" alt="National Sales and Expert Lead" height="270">
 							
 						</div>
 						<div class="person-info">
@@ -53,7 +57,7 @@
 				<div class="col-sm-6 col-lg-4 col-xl-3">
 					<div class="single-person">
 						<div class="person-image">
-							<img src="{{url('../images/shaike.jpg')}}" alt="EM Operation Officer">
+							<img src="{{url('../images/shaike.jpg')}}" alt="EM Operation Officer" height="270">
 							
 						</div>
 						<div class="person-info">
@@ -67,7 +71,7 @@
 				<div class="col-sm-6 col-lg-4 col-xl-3">
 					<div class="single-person">
 						<div class="person-image">
-							<img src="{{url('../images/rasel.jpg')}}" alt="Expert MIS Operation Head">
+							<img src="{{url('../images/rasel.jpg')}}" alt="Expert MIS Operation Head" height="270">
 							
 						</div>
 						<div class="person-info">
@@ -81,7 +85,7 @@
 				<div class="col-sm-6 col-lg-4 col-xl-3">
 					<div class="single-person">
 						<div class="person-image">
-							<img src="{{url('../images/akif.png')}}" alt="">
+							<img src="{{url('../images/akif.png')}}" alt="" height="270">
 							
 						</div>
 						<div class="person-info">
@@ -94,7 +98,7 @@
 				<div class="col-sm-6 col-lg-4 col-xl-3">
 					<div class="single-person">
 						<div class="person-image">
-							<img src="{{url('../images/morshed.jpg')}}" alt="">
+							<img src="{{url('../images/morshed.jpg')}}" alt="" height="240">
 							
 						</div>
 				<div class="person-info">
@@ -106,7 +110,7 @@
 				<div class="col-sm-6 col-lg-4 col-xl-3">
 					<div class="single-person">
 						<div class="person-image">
-							<img src="{{url('../images/omar.jpg')}}" alt="">
+							<img src="{{url('../images/omar.jpg')}}" alt="" height="270">
 							
 						</div>
 				<div class="person-info">
@@ -118,7 +122,7 @@
 				<div class="col-sm-6 col-lg-4 col-xl-3">
 					<div class="single-person">
 						<div class="person-image">
-							<img src="" alt="">
+							<img src="{{url('../images/person.jpg')}}" alt="" height="240">
 							
 						</div>
 				<div class="person-info">
@@ -140,6 +144,9 @@
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
       <li data-target="#myCarousel" data-slide-to="1"></li>
       <li data-target="#myCarousel" data-slide-to="2"></li>
+	  <li data-target="#myCarousel" data-slide-to="3"></li>
+      <li data-target="#myCarousel" data-slide-to="4"></li>
+      <li data-target="#myCarousel" data-slide-to="5"></li>
     </ol>
 
     <!-- Wrapper for slides -->

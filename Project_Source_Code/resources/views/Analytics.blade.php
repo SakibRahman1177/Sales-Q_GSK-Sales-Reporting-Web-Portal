@@ -6,6 +6,16 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />
+
+   <style>
+    td{
+        font-size: 13px;
+    }
+    th{
+        width: 20%;
+        font-size: 16px;
+    }
+    </style>
 </head>
 
 <body>
@@ -30,7 +40,7 @@
                        <br>
                    @endif
 
-                   <form action="{{url('/Dumpdata/import')}}" method="post" enctype="multipart/form-data">
+                   <form action="{{url('/')}}" method="post" enctype="multipart/form-data">
                        @csrf
 
                        <fieldset>
@@ -69,27 +79,31 @@
                    </div>
                    <div class=" card-content table-responsive">
                        <table id="example" class="table table-striped table-bordered" style="width:100%">
+                       <div style="width:30%;">
                            <thead>
                            <th>ID</th>
                             <th>Area</th>
                             <th>Territory</th>
-                            <th>DBCode</th>
-                            <th>DBName</th>
-                            <th>OutletCode</th>
-                            <th>SKUName</th>
+                            <th>DB_Code</th>
+                            <th>......DB_Name......</th>
+                            <th>Outlet_Code</th>
+                            <th>......SKU_Name......</th>
                             <th>Pcs</th>
                             <th>Value</th>
-                            <th>OutletName</th>
-                            <th>DHCPName</th>
-                            <th>Address</th>
-                            <th>ContactNumber</th>
+                            <th>....Outlet_Name....</th>
+                            <th>....DHCP_Name....</th>
+                            <th>............Address............</th>
+                            <th>Contact_Number</th>
                             <th>Brand</th>
+                            <th>Month</th>
                            </thead>
+                        </div>
                            <tbody>
 
                            @if(!empty($data) && $data->count())
 
                                @foreach($data as $row)
+                               <div>
                                    <tr>
                                    <td>{{ $row->id }}</td>
                                     <td>{{ $row->Area }}</td>
@@ -105,8 +119,9 @@
                                     <td>{{ $row->Address }}</td>
                                     <td>{{ $row->ContactNumber }}</td>
                                     <td>{{ $row->Brand }}</td>
+                                    <td>{{ $row->Month }}</td>
                                    </tr>
-
+                                </div>
                                @endforeach
 
                            @else
@@ -120,7 +135,7 @@
 
                        </table>
 
-                       {!! $data->links() !!}
+                       {{ $data->links() }}
 
                    </div>
                </div>

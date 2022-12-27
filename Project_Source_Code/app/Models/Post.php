@@ -10,8 +10,8 @@ class Post extends Model
     use HasFactory;
     protected $table = 'posts';
 	protected $fillable = [
-		'Month', 'Area', 'Territory','DBCode', 'DBName', 'OutletCode', 
+		 'Area', 'Territory','DBCode', 'DBName', 'OutletCode', 
  'SKUName', 'Pcs', 'Value',  'OutletName', 'DHCPName', 
-        'Address', 'ContactNumber', 'Brand'  
+        'Address', 'ContactNumber', 'Brand', 'Month'  
 	];
 }

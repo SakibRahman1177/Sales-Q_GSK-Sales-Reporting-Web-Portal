@@ -2,15 +2,25 @@
 <link rel="stylesheet" href="{{ URL::asset('css/reg.css') }}" />
 <style>
 body{
-    background-image: url('../images/Haleon.jpg');
+    background-image: url('../images/ad1.png');
     background-repeat: no-repeat;
     background-size: cover;
 }
+.bar{
+background-color: rgba(0,0,0,0.8);
+	width: 100%;
+  height: 100%;
+	font-size: 18px;
+	border-radius: 5px;
+	border: 0.3px solid rgba(255,255,255,0.2);
+	box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+	color: #fff;
+}
 </style>
 
-<div class="reg">  
+<div class="bar"> 
 <div class="contain">
-   
+
   <form id="reg" method="post">
   {{csrf_field()}}
   @if ($errors->any())
@@ -45,4 +55,5 @@ body{
       <button name="submit" class="submit" id="contact-submit" data-submit="...Sending">Signin</button>
     </fieldset>
   </form>
+</div>
 </div>

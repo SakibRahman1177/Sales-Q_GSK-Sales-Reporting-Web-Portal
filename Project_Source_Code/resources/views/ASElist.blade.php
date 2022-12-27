@@ -60,7 +60,7 @@
 
                    @endif
 
-                   <form action="{{url('history/ASEList')}}" method="post" enctype="multipart/form-data">
+                   <form action="{{url('/ASEList')}}" method="post" enctype="multipart/form-data">
 
                        @csrf
 

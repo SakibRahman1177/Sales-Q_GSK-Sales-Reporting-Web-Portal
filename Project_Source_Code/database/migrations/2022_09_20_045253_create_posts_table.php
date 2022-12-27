@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('Address');
             $table->string('ContactNumber');
             $table->string('Brand');
+            $table->string('Month');
             $table->timestamps();
         });
     }

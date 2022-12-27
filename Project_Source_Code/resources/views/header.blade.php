@@ -108,7 +108,7 @@
       </div>
       <div class="name-job">
         <div class="profile_name">Admin</div>
-        <div class="job">Data Analysis</div>
+        <div class="job">Sales Analysis</div>
       </div>
       <a href="logout">
       <i class='bx bx-log-out' href="logout"></i>

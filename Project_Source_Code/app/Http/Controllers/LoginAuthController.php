@@ -118,7 +118,7 @@ class LoginAuthController extends Controller
                 $admin->password = $data['password'];
                 $admin->cpassword = $data['cpassword'];
                 $admin->save();
-                return redirect('/reg')->with('success','Your Account Has been created successfully!');
+                return redirect('/login')->with('success','Your Account Has been created successfully!');
         }
     }   
     
